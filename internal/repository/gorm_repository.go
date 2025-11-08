@@ -27,9 +27,9 @@ func (r *gormRepository) Update(product *domain.Product) error {
 	return r.db.Save(product).Error
 }
 
-func (r *gormRepository) FindBySKU(name string) (*domain.Product, error) {
+func (r *gormRepository) FindById(id int) (*domain.Product, error) {
 	var product domain.Product
-	err := r.db.Where("name = ?", name).First(&product).Error
+	err := r.db.Where("id = ?", id).First(&product).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, nil
@@ -45,10 +45,9 @@ func (r *gormRepository) BulkUpsert(products []*domain.Product) error {
 	}
 
 	return r.db.Clauses(clause.OnConflict{
-		Columns: []clause.Column{{Name: "name"}},
+		Columns: []clause.Column{{Name: "id"}},
 		DoUpdates: clause.AssignmentColumns([]string{
-			"id", "name", "brand", "category", "price", "currency", "stock", "ean", "color", "size", "availability", "internal_id", "updated_at",
-		}),
+			"name", "brand", "category", "price", "currency", "stock", "ean", "color", "size", "availability", "internal_id", "updated_at"}),
 	}).CreateInBatches(&products, 100).Error
 }
 

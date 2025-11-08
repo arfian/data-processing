@@ -24,6 +24,7 @@ type Product struct {
 	InternalId   int
 	CreatedAt    time.Time
 	UpdatedAt    time.Time
+	CreatedBy    string `gorm:"not null"`
 }
 
 // CSVRecord represents raw CSV data
@@ -95,7 +96,7 @@ type FileResult struct {
 type ProductRepository interface {
 	Create(product *Product) error
 	Update(product *Product) error
-	FindBySKU(name string) (*Product, error)
+	FindById(id int) (*Product, error)
 	BulkUpsert(products []*Product) error
 	GetAll() ([]*Product, error)
 }

@@ -1,9 +1,9 @@
 BEGIN;
 
-CREATE TABLE IF NOT EXISTS product (
-    id int NOT NULL,
+CREATE TABLE IF NOT EXISTS products (
+    id int PRIMARY KEY NOT NULL,
     name VARCHAR(100) NOT NULL,
-    Description TEXT NULL,
+    description TEXT NULL,
     brand VARCHAR(100) NOT NULL,
     category VARCHAR(100) NOT NULL,
     price DECIMAL(10, 2) DEFAULT 0.00,

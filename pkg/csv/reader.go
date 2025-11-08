@@ -6,6 +6,7 @@ package csv
 import (
 	"data-processing/internal/domain"
 	"encoding/csv"
+	"log"
 	"os"
 )
 
@@ -16,7 +17,12 @@ func NewReader() *Reader {
 }
 
 func (r *Reader) ReadCSV(filePath string) ([]*domain.CSVRecord, error) {
-	file, err := os.Open(filePath)
+	currentDir, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	file, err := os.Open(currentDir + filePath)
 	if err != nil {
 		return nil, err
 	}

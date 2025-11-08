@@ -207,7 +207,7 @@ func (u *csvProcessorUsecase) processRecord(job *domain.ProcessJob) *domain.Proc
 	}
 
 	// Check if product exists
-	existing, err := u.repo.FindBySKU(record.Name)
+	existing, err := u.repo.FindById(product.ID)
 	if err != nil {
 		return &domain.ProcessResult{
 			Product:   product,
@@ -271,5 +271,6 @@ func (u *csvProcessorUsecase) convertToProduct(record *domain.CSVRecord) (*domai
 		InternalId:   internalId,
 		Price:        price,
 		Stock:        stock,
+		CreatedBy:    "system",
 	}, nil
 }
