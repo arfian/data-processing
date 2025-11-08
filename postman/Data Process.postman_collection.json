@@ -1,0 +1,40 @@
+{
+	"info": {
+		"_postman_id": "6c2a5707-0abd-4c11-a65c-b65a01970375",
+		"name": "Data Process",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "48439277"
+	},
+	"item": [
+		{
+			"name": "Process File",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"file_paths\": [\"/csv/product-csv-1.csv\", \"/csv/product-csv-2.csv\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/api/v1/csv/process",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"api",
+						"v1",
+						"csv",
+						"process"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

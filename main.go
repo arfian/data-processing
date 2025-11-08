@@ -16,6 +16,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @title Data Process API
+// @version 1.0
+// @description Data Process Service
 func main() {
 	cfg := config.LoadConfig()
 

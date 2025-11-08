@@ -1,0 +1,45 @@
+definitions:
+  handler.ProcessCSVRequest:
+    properties:
+      file_paths:
+        items:
+          type: string
+        type: array
+    required:
+    - file_paths
+    type: object
+info:
+  contact: {}
+  description: Data Process Service
+  title: Data Process API
+  version: "1.0"
+paths:
+  /csv/process:
+    post:
+      consumes:
+      - application/json
+      description: Insert / Update Process CSV
+      parameters:
+      - description: Array Path CSV
+        in: body
+        name: csv
+        required: true
+        schema:
+          $ref: '#/definitions/handler.ProcessCSVRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Process CSV
+      tags:
+      - csv
+swagger: "2.0"
