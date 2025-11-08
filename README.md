@@ -81,11 +81,10 @@ The API documentation is available in Postman format. Import the following files
 ├── docs/             # Generate docs API swagger
 ├── internal/         # Code with internal system
 │   ├── delivery/     # Bussiness domain
-│   ├── ├── http/     # Folder domain name
-│   ├── domain/       # Bussiness domain
-│   ├── repository/   # Bussiness domain
-│   ├── usecase/      # Bussiness domain
-│   ├── setup/        # Setup init register domain interfaces
+│   ├── ├── http/     # Logic handle API logic
+│   ├── domain/       # List all interface domain
+│   ├── repository/   # Logic query SQL
+│   ├── usecase/      # Business logic implementation
 └── migrations/       # Generate code migration database
 └── pkg/              # code package helper logic
 └── postman/          # Postman collection and environment
