@@ -128,7 +128,7 @@ func (u *csvProcessorUsecase) processFileWithWorkers(
 		if result.Error != nil {
 			fileResult.Failed++
 			errorMsg := fmt.Sprintf("Row %d (SKU: %s): %v",
-				result.RowNumber, result.Product.SKU, result.Error)
+				result.RowNumber, result.Product.Name, result.Error)
 			fileResult.Errors = append(fileResult.Errors, errorMsg)
 			u.logger.Error(errorMsg)
 		} else {
@@ -207,7 +207,7 @@ func (u *csvProcessorUsecase) processRecord(job *domain.ProcessJob) *domain.Proc
 	}
 
 	// Check if product exists
-	existing, err := u.repo.FindBySKU(record.SKU)
+	existing, err := u.repo.FindBySKU(record.Name)
 	if err != nil {
 		return &domain.ProcessResult{
 			Product:   product,
@@ -243,15 +243,33 @@ func (u *csvProcessorUsecase) convertToProduct(record *domain.CSVRecord) (*domai
 		return nil, fmt.Errorf("invalid stock: %v", err)
 	}
 
-	if record.SKU == "" || record.Name == "" {
+	id, err := strconv.Atoi(record.ID)
+	if err != nil {
+		return nil, fmt.Errorf("invalid stock: %v", err)
+	}
+
+	internalId, err := strconv.Atoi(record.InternalId)
+	if err != nil {
+		return nil, fmt.Errorf("invalid stock: %v", err)
+	}
+
+	if record.Name == "" {
 		return nil, fmt.Errorf("SKU and Name are required")
 	}
 
 	return &domain.Product{
-		SKU:         record.SKU,
-		Name:        record.Name,
-		Description: record.Description,
-		Price:       price,
-		Stock:       stock,
+		ID:           id,
+		Name:         record.Name,
+		Description:  record.Description,
+		Brand:        record.Brand,
+		Category:     record.Category,
+		Currency:     record.Currency,
+		Ean:          record.Ean,
+		Color:        record.Color,
+		Size:         record.Size,
+		Availability: record.Availability,
+		InternalId:   internalId,
+		Price:        price,
+		Stock:        stock,
 	}, nil
 }

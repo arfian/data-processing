@@ -40,12 +40,20 @@ func (r *Reader) ReadCSV(filePath string) ([]*domain.CSVRecord, error) {
 		}
 
 		csvRecords = append(csvRecords, &domain.CSVRecord{
-			SKU:         record[0],
-			Name:        record[1],
-			Description: record[2],
-			Price:       record[3],
-			Stock:       record[4],
-			RowNumber:   i + 1,
+			ID:           record[0],
+			Name:         record[1],
+			Description:  record[2],
+			Brand:        record[3],
+			Category:     record[4],
+			Price:        record[5],
+			Currency:     record[6],
+			Stock:        record[7],
+			Ean:          record[8],
+			Color:        record[9],
+			Size:         record[10],
+			Availability: record[11],
+			InternalId:   record[12],
+			RowNumber:    i + 1,
 		})
 	}
 

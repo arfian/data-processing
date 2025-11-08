@@ -4,8 +4,10 @@
 package config
 
 import (
-	"os"
-	"strconv"
+	"fmt"
+	"log"
+
+	"github.com/spf13/viper"
 )
 
 type Config struct {
@@ -16,26 +18,37 @@ type Config struct {
 }
 
 func LoadConfig() *Config {
+	viper.SetConfigType("env")
+	viper.SetConfigName(".env") // name of Config file (without extension)
+	viper.AddConfigPath(".")
+	viper.AddConfigPath("/secrets")
+	viper.AutomaticEnv()
+
+	if err := viper.ReadInConfig(); err != nil {
+		log.Fatalf("failed to load config file", err)
+	}
+
 	return &Config{
-		DatabaseURL: getEnv("DATABASE_URL", "postgres://user:password@localhost:5432/dbname?sslmode=disable"),
-		ServerPort:  getEnv("SERVER_PORT", "8080"),
-		WorkerCount: getEnvInt("WORKER_COUNT", 5),
-		BatchSize:   getEnvInt("BATCH_SIZE", 100),
+		DatabaseURL: getRequiredString("DATABASE_URL"),
+		ServerPort:  getRequiredString("SERVER_PORT"),
+		WorkerCount: getRequiredInt("WORKER_COUNT"),
+		BatchSize:   getRequiredInt("BATCH_SIZE"),
 	}
 }
 
-func getEnv(key, defaultVal string) string {
-	if val := os.Getenv(key); val != "" {
-		return val
+func getRequiredString(key string) string {
+	if viper.IsSet(key) {
+		return viper.GetString(key)
 	}
-	return defaultVal
+
+	log.Fatalln(fmt.Errorf("KEY %s IS MISSING", key))
+	return ""
 }
 
-func getEnvInt(key string, defaultVal int) int {
-	if val := os.Getenv(key); val != "" {
-		if intVal, err := strconv.Atoi(val); err == nil {
-			return intVal
-		}
+func getRequiredInt(key string) int {
+	if viper.IsSet(key) {
+		return viper.GetInt(key)
 	}
-	return defaultVal
+
+	panic(fmt.Errorf("KEY %s IS MISSING", key))
 }

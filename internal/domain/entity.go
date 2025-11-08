@@ -9,24 +9,39 @@ import (
 
 // Product represents the domain model
 type Product struct {
-	ID          uint   `gorm:"primarykey"`
-	SKU         string `gorm:"uniqueIndex;not null"`
-	Name        string `gorm:"not null"`
-	Description string
-	Price       float64 `gorm:"not null"`
-	Stock       int     `gorm:"default:0"`
-	CreatedAt   time.Time
-	UpdatedAt   time.Time
+	ID           int    `gorm:"primarykey"`
+	Name         string `gorm:"not null"`
+	Description  string
+	Brand        string  `gorm:"not null"`
+	Category     string  `gorm:"not null"`
+	Price        float64 `gorm:"not null"`
+	Currency     string
+	Stock        int `gorm:"default:0"`
+	Ean          string
+	Color        string
+	Size         string
+	Availability string
+	InternalId   int
+	CreatedAt    time.Time
+	UpdatedAt    time.Time
 }
 
 // CSVRecord represents raw CSV data
 type CSVRecord struct {
-	SKU         string
-	Name        string
-	Description string
-	Price       string
-	Stock       string
-	RowNumber   int
+	ID           string
+	Name         string
+	Description  string
+	Brand        string
+	Category     string
+	Price        string
+	Currency     string
+	Stock        string
+	Ean          string
+	Color        string
+	Size         string
+	Availability string
+	InternalId   string
+	RowNumber    int
 }
 
 // ProcessJob represents a job to be processed
@@ -80,7 +95,7 @@ type FileResult struct {
 type ProductRepository interface {
 	Create(product *Product) error
 	Update(product *Product) error
-	FindBySKU(sku string) (*Product, error)
+	FindBySKU(name string) (*Product, error)
 	BulkUpsert(products []*Product) error
 	GetAll() ([]*Product, error)
 }
