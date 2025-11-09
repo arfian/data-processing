@@ -101,7 +101,7 @@ type ProductRepository interface {
 	GetAll() ([]*Product, error)
 }
 
-// CSVProcessorUsecase defines usecase interface
+// CSVProcessorUsecase defines usecase interfaceace
 type CSVProcessorUsecase interface {
 	ProcessCSVFiles(filePaths []string, progressChan chan<- *ProgressUpdate) (*FinalResult, error)
 }
