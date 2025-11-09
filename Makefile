@@ -22,3 +22,9 @@ migrateup:
 
 migratedown:
 	migrate -path migrations -database "${DATABASE_URL}" -verbose down
+
+docker-build: 
+	docker build -t data-processing -f Dockerfile .
+
+docker-run: 
+	docker run -p 8089:8089 data-processing

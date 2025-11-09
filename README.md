@@ -63,6 +63,11 @@ $ go mod download
 $ go run main.go 
 ```
 
+### Check Unit Test
+```sh
+$ make test 
+```
+
 ## API Documentation
 The API documentation is available in Postman format. Import the following files into Postman:
 
